@@ -1,0 +1,85 @@
+/* Phase 1 (theme): Royal Marriage Garden palette, card/button/chip classes, mobile base. Purani
+   navy/gold classes ab Burgundy/Gold par map hain (tailwind.config.ts). */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --rmg-burgundy: #720F26;
+  --rmg-wine: #400817;
+  --rmg-gold: #D8B45A;
+  --rmg-ivory: #FFF5E6;
+  --rmg-white: #FFFFFF;
+  --rmg-brown: #30201D;
+  --rmg-success: #23834D;
+}
+
+html { background: var(--rmg-ivory); }
+body {
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  color: var(--rmg-brown);
+  font-size: 16px;            /* body text 14px se upar */
+  line-height: 1.5;
+}
+input, select, textarea { font-size: 16px; } /* phone par zoom rokne ke liye */
+
+@layer components {
+  .rmg-title { font-family: "Playfair Display", Georgia, "Iowan Old Style", serif; color: var(--rmg-wine); letter-spacing: 0.01em; }
+  .rmg-eyebrow { font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B4A3C; font-weight: 600; }
+  .rmg-card {
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFFBF4 100%);
+    border: 1px solid var(--rmg-gold);
+    border-color: rgba(216, 180, 90, 0.55);
+    border-radius: 18px;
+    box-shadow: 0 10px 28px -14px rgba(64, 8, 23, 0.28), 0 2px 6px -2px rgba(64, 8, 23, 0.10);
+  }
+  .rmg-hero {
+    background: linear-gradient(135deg, #720F26 0%, #5A0C1E 55%, #400817 100%);
+    color: var(--rmg-ivory);
+    border: 1px solid rgba(216, 180, 90, 0.6);
+    border-radius: 22px;
+    box-shadow: 0 18px 40px -18px rgba(64, 8, 23, 0.55);
+  }
+  .rmg-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 44px; padding: 10px 16px; border-radius: 12px; font-weight: 600;
+    transition: transform 120ms ease, box-shadow 120ms ease;
+  }
+  .rmg-btn:active { transform: scale(0.98); }
+  .rmg-btn-primary {
+    background: linear-gradient(135deg, #720F26 0%, #8C1A33 100%); color: #FFFFFF;
+    box-shadow: 0 8px 18px -10px rgba(64, 8, 23, 0.7);
+  }
+  .rmg-btn-gold {
+    background: linear-gradient(135deg, #E9CF8C 0%, #D8B45A 100%); color: #400817;
+    border: 1px solid #C9A24A;
+  }
+  .rmg-btn-ghost { background: #FFFFFF; color: var(--rmg-wine); border: 1px solid rgba(216, 180, 90, 0.8); }
+  .rmg-chip {
+    display: inline-flex; align-items: center; min-height: 28px; padding: 2px 10px; border-radius: 999px;
+    font-size: 14px; font-weight: 600; background: #FFF5E6; color: #400817; border: 1px solid rgba(216, 180, 90, 0.6);
+  }
+  .rmg-chip-hold { background: #FBF0D2; color: #5C4310; }
+  .rmg-chip-green { background: #E6F4EC; color: #23834D; border-color: rgba(35, 131, 77, 0.35); }
+  .rmg-chip-red { background: #FBE9EC; color: #8A1630; border-color: rgba(114, 15, 38, 0.3); }
+  .rmg-label { font-size: 14px; font-weight: 600; color: #4A2F27; }
+  .rmg-input {
+    width: 100%; min-height: 44px; padding: 10px 12px; border-radius: 12px;
+    background: #FFFFFF; border: 1px solid #E3CFA6; color: var(--rmg-brown);
+  }
+  .rmg-input:focus { outline: 2px solid var(--rmg-gold); outline-offset: 1px; border-color: var(--rmg-burgundy); }
+  .rmg-hairline { border-top: 1px solid rgba(216, 180, 90, 0.45); }
+}
+
+:focus-visible { outline: 2px solid var(--rmg-gold); outline-offset: 2px; }
+
+/* Splash: halka fade, first visit par */
+@keyframes rmg-splash-in { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+@keyframes rmg-glow { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+.rmg-splash-in { animation: rmg-splash-in 500ms ease-out both; }
+.rmg-glow { animation: rmg-glow 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .rmg-splash-in, .rmg-glow { animation: none; }
+  * { transition: none !important; }
+}

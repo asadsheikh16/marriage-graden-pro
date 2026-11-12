@@ -1,0 +1,31 @@
+# Har hafte ek full database backup (pg_dump) GitHub par artifact ke roop mein.
+# Setup: GitHub repo > Settings > Secrets and variables > Actions > New secret
+#   Name:  SUPABASE_DB_URL
+#   Value: Supabase > Project Settings > Database > Connection string (Session pooler, URI)
+#          Password ki jagah apna database password. Ye value kahin aur paste na karein.
+# Private repo mein hi rakhein. Artifact 30 din tak rahega.
+name: weekly-db-backup
+
+on:
+  schedule:
+    - cron: '30 2 * * 0'   # har Sunday 08:00 IST
+  workflow_dispatch:       # haath se chalane ke liye (Actions tab > Run workflow)
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Full database dump (custom format)
+        env:
+          DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: pg_dump "$DB_URL" --no-owner --no-privileges -Fc -f backup.dump
+
+      - name: Save as artifact (30 din)
+        uses: actions/upload-artifact@v4
+        with:
+          name: db-backup-${{ github.run_id }}
+          path: backup.dump
+          retention-days: 30
